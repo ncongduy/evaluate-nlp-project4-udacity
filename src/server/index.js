@@ -14,18 +14,15 @@ app.use(express.json());
 // to use url encoded values
 app.use(express.urlencoded({ extended: true }));
 
-// using environment variable
+// using environment variable to save apiKey
 dotenv.config();
 const apiKey = process.env.API_KEY;
 
-// declare variable to use when fetch data
-const txt = 'Main dishes were quite good, but desserts were too sweet for me.';
-const url = `https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=auto&txt=${txt}`;
-
-// get data from MeaningCloud API
+// save data from MeaningCloud API to variable
 const data = {};
 
-async function getData() {
+// function get data from MeaningCloud API
+async function getData(url) {
 	try {
 		const fetchData = await fetch(url);
 		const dataResponse = await fetchData.json();
@@ -35,8 +32,6 @@ async function getData() {
 		alert(error);
 	}
 }
-
-getData().then((dataResponse) => Object.assign(data, dataResponse));
 
 // setup static direction to dist folder
 app.use(express.static('dist'));
@@ -52,10 +47,19 @@ app.get('/test', function (req, res) {
 });
 
 app.get('/data', function (req, res) {
+	console.log('GET', req.body);
 	res.send(data);
 });
 
-// run server at port 8081
-app.listen(8081, function () {
-	console.log('Example app listening on port 8081!');
+app.post('/data', function (req, res) {
+	console.log('POST', req.body);
+	const url = `https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=auto&txt=${req.body.formText}`;
+	getData(url)
+		.then((dataResponse) => Object.assign(data, dataResponse))
+		.then(() => res.send(data));
+});
+
+// run server at port 5000
+app.listen(5000, function () {
+	console.log('Example app listening on port 5000!');
 });
