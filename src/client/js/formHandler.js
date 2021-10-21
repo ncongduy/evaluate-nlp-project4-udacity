@@ -58,6 +58,11 @@ function handleSubmit(event) {
 	let formText = document.getElementById('name').value;
 	Client.checkForName(formText);
 
+	// validate when user don't type in
+	if (formText.trim() === '') {
+		return;
+	}
+
 	console.log('::: Form Submitted :::');
 	const dataPostToServer = { formText };
 	const localServer = 'http://localhost:5000/data';
