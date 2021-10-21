@@ -3,14 +3,27 @@ function handleSubmit(event) {
 
 	// check what text was put into the form field
 	let formText = document.getElementById('name').value;
-	Client.checkForName(formText);
-
+	Client.checkForName(formText);	
+	
 	console.log('::: Form Submitted :::');
-	fetch('http://localhost:8081/test')
-		.then((res) => res.json())
-		.then(function (res) {
-			document.getElementById('results').innerHTML = res.message;
-		});
+	const dataPostToServer = { formText };
+	const localServer = 'http://localhost:5000/data';
+	Client.postDataToServer(dataPostToServer, localServer)
+		.then(() => Client.getDataFromServer(localServer))
+		.then((data) => {
+			const listElement = document.getElementById('results-list');
+
+			listElement.innerHTML = `
+				<li>Content: ${formText}</li>
+				<li>Status: ${data.status.msg}</li>
+				<li>Agreement: ${data.agreement}</li>
+				<li>Subjectivity: ${data.subjectivity}</li>
+				<li>Confidence score: ${data.confidence}</li>
+				<li>Irony: ${data.irony}</li>
+			`;
+		})
+		.then(() => (document.getElementById('name').value = ''))
+		.catch((error) => alert(error));
 }
 
 export { handleSubmit };
