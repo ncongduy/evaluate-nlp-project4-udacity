@@ -5,9 +5,9 @@ describe('get data from server', () => {
 		const url = 'http://localhost:5000/data';
 		const fetchData = await getDataFromServer(url);
 
-        const input = typeof fetchData;
+		const input = typeof fetchData;
 		const output = 'object';
 
-		expect(typeOfData(input)).toEqual(output);
+		expect(input).toEqual(output);
 	});
 });

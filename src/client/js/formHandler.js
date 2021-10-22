@@ -64,9 +64,9 @@ function handleSubmit(event) {
 	}
 
 	// check content user type in, which is a text or an url
-	const checkFormText = Client.checkForUrl(formText);
+	const checkFormTextIsUrl = Client.checkForUrl(formText);
 
-	if (checkFormText === true) {
+	if (checkFormTextIsUrl === true) {
 		inputData = 'url=' + formText;
 	} else {
 		inputData = 'txt=' + formText;
@@ -75,6 +75,7 @@ function handleSubmit(event) {
 	console.log('::: Form Submitted :::');
 	const dataPostToServer = { inputData };
 	const localServer = 'http://localhost:5000/data';
+	
 	Client.postDataToServer(dataPostToServer, localServer)
 		.then((localServer) => Client.getDataFromServer(localServer))
 		.then((data) => {
