@@ -53,7 +53,7 @@ app.get('/data', function (req, res) {
 
 app.post('/data', function (req, res) {
 	console.log('POST', req.body);
-	const url = `https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=auto&txt=${req.body.formText}`;
+	const url = `https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=auto&${req.body.inputData}`;
 	getData(url)
 		.then((dataResponse) => Object.assign(data, dataResponse))
 		.then(() => res.send(data));

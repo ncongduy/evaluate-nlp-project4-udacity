@@ -56,18 +56,27 @@ function handleSubmit(event) {
 
 	// check what text was put into the form field
 	let formText = document.getElementById('name').value;
-	Client.checkForName(formText);
+	let inputData;
 
-	// validate when user don't type in
+	// validate when user don't type in or type spacing
 	if (formText.trim() === '') {
 		return;
 	}
 
+	// check content user type in, which is a text or an url
+	const checkFormText = Client.checkForUrl(formText);
+
+	if (checkFormText === true) {
+		inputData = 'url=' + formText;
+	} else {
+		inputData = 'txt=' + formText;
+	}
+
 	console.log('::: Form Submitted :::');
-	const dataPostToServer = { formText };
+	const dataPostToServer = { inputData };
 	const localServer = 'http://localhost:5000/data';
 	Client.postDataToServer(dataPostToServer, localServer)
-		.then(() => Client.getDataFromServer(localServer))
+		.then((localServer) => Client.getDataFromServer(localServer))
 		.then((data) => {
 			const listElement = document.getElementById('results-list');
 

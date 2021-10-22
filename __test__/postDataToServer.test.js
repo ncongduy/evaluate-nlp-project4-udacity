@@ -1,21 +1,11 @@
-// async function POST data to server
-async function postDataToServer(data, localServer) {
-	try {
-		await fetch(localServer, {
-			method: 'POST',
-			mode: 'cors',
-			cache: 'no-cache',
-			credentials: 'same-origin',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			redirect: 'follow',
-			referrerPolicy: 'no-referrer',
-			body: JSON.stringify(data),
-		});
-	} catch (error) {
-		alert(error);
-	}
-}
+import { postDataToServer } from '../src/client/js/postDataToServer';
 
-export { postDataToServer };
+describe('post data to server', () => {
+	test('post data', async () => {
+		const arrayInput = ['test', 'http://localhost:5000/data'];
+		const input = await postDataToServer(arrayInput[0], arrayInput[1]);
+		const output = 'http://localhost:5000/data';
+
+		expect(typeOfData(input)).toEqual(output);
+	});
+});

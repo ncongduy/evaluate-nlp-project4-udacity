@@ -1,16 +1,13 @@
-// import { getDataFromServer } from '../src/client/js/getDataFromServer';
+import { getDataFromServer } from '../src/client/js/getDataFromServer';
 
-// async function typeOfData(input) {
-// 	const data = await getDataFromServer(input);
+describe('get data from server', () => {
+	test('it should get data from url (link)', async () => {
+		const url = 'http://localhost:5000/data';
+		const fetchData = await getDataFromServer(url);
 
-// 	return typeof data;
-// }
+        const input = typeof fetchData;
+		const output = 'object';
 
-// describe('Get data function', () => {
-// 	test('it should get data from url (link)', () => {
-// 		const input = 'http://localhost:5000/data';
-// 		const output = 'object';
-
-// 		expect(typeOfData(input)).toEqual(output);
-// 	});
-// });
+		expect(typeOfData(input)).toEqual(output);
+	});
+});
