@@ -46,6 +46,10 @@ app.get('/test', function (req, res) {
 	res.send(mockAPIResponse);
 });
 
+app.post('/test', function (req, res) {
+	res.send(mockAPIResponse);
+});
+
 app.get('/data', function (req, res) {
 	console.log('GET', req.body);
 	res.send(data);
