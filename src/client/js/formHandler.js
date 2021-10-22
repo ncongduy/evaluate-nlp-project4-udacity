@@ -84,4 +84,4 @@ function handleSubmit(event) {
 		.catch((error) => alert(error));
 }
 
-export { handleSubmit };
+export { handleSubmit, sentimented, subjectivity, agreement, irony };
