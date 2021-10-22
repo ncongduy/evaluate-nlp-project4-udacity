@@ -63,27 +63,29 @@ function handleSubmit(event) {
 		return;
 	}
 
+	// access list element to render UI
+	const listElement = document.getElementById('results-list');
+
 	// check content user type in, which is a text or an url
 	const checkFormTextIsUrl = Client.checkForUrl(formText);
 
 	if (checkFormTextIsUrl === true) {
 		inputData = 'url=' + formText;
 	} else {
-		inputData = 'txt=' + formText;
+		listElement.innerHTML = `<li>URL is not exist. Please type another URL!</li>`;
+		return;
 	}
 
 	console.log('::: Form Submitted :::');
 	const dataPostToServer = { inputData };
 	const localServer = 'http://localhost:5000/data';
-	
+
 	Client.postDataToServer(dataPostToServer, localServer)
 		.then((localServer) => Client.getDataFromServer(localServer))
 		.then((data) => {
-			const listElement = document.getElementById('results-list');
-
 			listElement.innerHTML = `
 				<li>Status: ${data.status.msg}</li>
-				<li>Content: ${formText}</li>
+				<li>URL: ${formText}</li>
 				<li>Sentimented: ${sentimented(data.score_tag)}</li>
 				<li>Agreement: ${agreement(data.agreement)}</li>
 				<li>Subjectivity: ${subjectivity(data.subjectivity)}</li>
