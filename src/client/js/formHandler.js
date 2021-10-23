@@ -62,11 +62,6 @@ function handleSubmit(event) {
 	let formText = document.getElementById('name').value;
 	let inputData;
 
-	// validate when user don't type in or type spacing
-	if (formText.trim() === '') {
-		return;
-	}
-
 	// access list element to render UI
 	const listElement = document.getElementById('results-list');
 
@@ -76,7 +71,7 @@ function handleSubmit(event) {
 	if (checkFormTextIsUrl === true) {
 		inputData = 'url=' + formText;
 	} else {
-		listElement.innerHTML = `<li>URL is not exist. Please type another URL!</li>`;
+		listElement.innerHTML = `<li style="color:crimson;">URL is not exist. Please type another URL!</li>`;
 		clearInputForm();
 		return;
 	}
