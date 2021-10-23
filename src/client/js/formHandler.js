@@ -51,6 +51,10 @@ function irony(data) {
 	}
 }
 
+function clearInputForm() {
+	document.getElementById('name').value = '';
+}
+
 function handleSubmit(event) {
 	event.preventDefault();
 
@@ -73,10 +77,12 @@ function handleSubmit(event) {
 		inputData = 'url=' + formText;
 	} else {
 		listElement.innerHTML = `<li>URL is not exist. Please type another URL!</li>`;
+		clearInputForm();
 		return;
 	}
 
 	console.log('::: Form Submitted :::');
+	clearInputForm();
 	const dataPostToServer = { inputData };
 	const localServer = 'http://localhost:5000/data';
 
@@ -92,7 +98,6 @@ function handleSubmit(event) {
 				<li>Irony: ${irony(data.irony)}</li>
 			`;
 		})
-		.then(() => (document.getElementById('name').value = ''))
 		.catch((error) => alert(error));
 }
 
