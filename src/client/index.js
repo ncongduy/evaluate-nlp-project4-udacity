@@ -10,6 +10,4 @@ import './styles/form.scss';
 import './styles/header.scss';
 import './styles/results.scss';
 
-// alert('CHANGED!');
-
 export { checkForName, handleSubmit, getDataFromServer, postDataToServer };
