@@ -79,7 +79,7 @@ function handleSubmit(event) {
 	console.log('::: Form Submitted :::');
 	clearInputForm();
 	const dataPostToServer = { inputData };
-	const localServer = 'http://localhost:5000/data';
+	const localServer = 'https://evaluate-news-nlp-project4.herokuapp.com/data';
 
 	Client.postDataToServer(dataPostToServer, localServer)
 		.then((localServer) => Client.getDataFromServer(localServer))
