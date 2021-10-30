@@ -13,6 +13,8 @@ async function postDataToServer(data, localServer) {
 			referrerPolicy: 'no-referrer',
 			body: JSON.stringify(data),
 		});
+
+		return localServer;
 	} catch (error) {
 		alert(error);
 	}

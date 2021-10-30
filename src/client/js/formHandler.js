@@ -51,72 +51,49 @@ function irony(data) {
 	}
 }
 
+function clearInputForm() {
+	document.getElementById('name').value = '';
+}
+
 function handleSubmit(event) {
 	event.preventDefault();
 
 	// check what text was put into the form field
 	let formText = document.getElementById('name').value;
-<<<<<<< HEAD
-	Client.checkForName(formText);
+	let inputData;
 
-	// validate when user don't type in
-	if (formText.trim() === '') {
+	// access list element to render UI
+	const listElement = document.getElementById('results-list');
+
+	// check content user type in, which is a text or an url
+	const checkFormTextIsUrl = Client.checkForUrl(formText);
+
+	if (checkFormTextIsUrl === true) {
+		inputData = 'url=' + formText;
+	} else {
+		listElement.innerHTML = `<li style="color:crimson;">URL is not exist. Please type another URL!</li>`;
+		clearInputForm();
 		return;
 	}
 
-||||||| 5c6694b
-	Client.checkForName(formText);
-
-=======
-	Client.checkForName(formText);	
-	
->>>>>>> 71965c5282165da940fbfc7de37676980b310d6a
 	console.log('::: Form Submitted :::');
-<<<<<<< HEAD
-	const dataPostToServer = { formText };
-	const localServer = 'http://localhost:5000/data';
-	Client.postDataToServer(dataPostToServer, localServer)
-		.then(() => Client.getDataFromServer(localServer))
-		.then((data) => {
-			const listElement = document.getElementById('results-list');
+	clearInputForm();
+	const dataPostToServer = { inputData };
+	const localServer = 'https://evaluate-news-nlp-project4.herokuapp.com/data';
 
+	Client.postDataToServer(dataPostToServer, localServer)
+		.then((localServer) => Client.getDataFromServer(localServer))
+		.then((data) => {
 			listElement.innerHTML = `
 				<li>Status: ${data.status.msg}</li>
-				<li>Content: ${formText}</li>
+				<li>URL: ${formText}</li>
 				<li>Sentimented: ${sentimented(data.score_tag)}</li>
 				<li>Agreement: ${agreement(data.agreement)}</li>
 				<li>Subjectivity: ${subjectivity(data.subjectivity)}</li>
 				<li>Irony: ${irony(data.irony)}</li>
 			`;
 		})
-		.then(() => (document.getElementById('name').value = ''))
 		.catch((error) => alert(error));
-||||||| 5c6694b
-	fetch('http://localhost:8081/test')
-		.then((res) => res.json())
-		.then(function (res) {
-			document.getElementById('results').innerHTML = res.message;
-		});
-=======
-	const dataPostToServer = { formText };
-	const localServer = 'http://localhost:5000/data';
-	Client.postDataToServer(dataPostToServer, localServer)
-		.then(() => Client.getDataFromServer(localServer))
-		.then((data) => {
-			const listElement = document.getElementById('results-list');
-
-			listElement.innerHTML = `
-				<li>Content: ${formText}</li>
-				<li>Status: ${data.status.msg}</li>
-				<li>Agreement: ${data.agreement}</li>
-				<li>Subjectivity: ${data.subjectivity}</li>
-				<li>Confidence score: ${data.confidence}</li>
-				<li>Irony: ${data.irony}</li>
-			`;
-		})
-		.then(() => (document.getElementById('name').value = ''))
-		.catch((error) => alert(error));
->>>>>>> 71965c5282165da940fbfc7de37676980b310d6a
 }
 
-export { handleSubmit };
+export { handleSubmit, sentimented, subjectivity, agreement, irony };

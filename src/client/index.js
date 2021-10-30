@@ -1,4 +1,4 @@
-import { checkForName } from './js/nameChecker';
+import { checkForUrl } from './js/urlChecker';
 import { handleSubmit } from './js/formHandler';
 import { getDataFromServer } from './js/getDataFromServer';
 import { postDataToServer } from './js/postDataToServer';
@@ -12,4 +12,4 @@ import './styles/results.scss';
 
 // alert('CHANGED!');
 
-export { checkForName, handleSubmit, getDataFromServer, postDataToServer };
+export { checkForUrl, handleSubmit, getDataFromServer, postDataToServer };

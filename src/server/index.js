@@ -46,6 +46,10 @@ app.get('/test', function (req, res) {
 	res.send(mockAPIResponse);
 });
 
+app.post('/test', function (req, res) {
+	res.send(mockAPIResponse);
+});
+
 app.get('/data', function (req, res) {
 	console.log('GET', req.body);
 	res.send(data);
@@ -53,13 +57,14 @@ app.get('/data', function (req, res) {
 
 app.post('/data', function (req, res) {
 	console.log('POST', req.body);
-	const url = `https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=auto&txt=${req.body.formText}`;
+	const url = `https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=auto&${req.body.inputData}`;
 	getData(url)
 		.then((dataResponse) => Object.assign(data, dataResponse))
 		.then(() => res.send(data));
 });
 
 // run server at port 5000
-app.listen(5000, function () {
-	console.log('Example app listening on port 5000!');
+const port = process.env.PORT || 5000;
+app.listen(port, function () {
+	console.log(`Example app listening on port ${port}!`);
 });
